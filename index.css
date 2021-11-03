@@ -31,8 +31,8 @@ body {
 
       .span-two {
         grid-column: span 2;
-        color: #adf802;
-        background-color: rgba(139, 0, 139, 0.8);
+        color: black;
+        background-color:royalblue;
       }
       .output{
         grid-column: 1 / -1;
