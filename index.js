@@ -11,7 +11,7 @@ this.perviousOperand = ''
 this.operation=undefined
 }
 delete(){
-
+this.currentOperand=this.currentOperand.toString().slice(0,-1)
 
 
 }
@@ -62,9 +62,39 @@ this.operation = undefined
 this.perviousOperand =''
 }
 
+getDisplayNumber(number){
+  const stringNumber =number.toString()
+  const intergerDigits = parseFloat(stringNumber.split('.')[0])
+  const decimalDigits =stringNumber.split('.')[1]
+  if(isNaN(intergerDigits)){
+intergerDigits=''
+
+  }
+ else {
+  intergerDigits = intergerDigits.toLocaleString('en',{
+   maximumFractionDigits:0
+   
+
+  })
+
+
+ }
+ if (decimalDigits != null) {
+  return `${integerDisplay}.${decimalDigits}`
+} else {
+  return integerDisplay
+}
+
+}
 updateDisplay(){
 this.currentOperandTextElement.innerText=this.currentOperand
-this.perviousOperandTextElement.innerText =this.perviousOperand
+if (this.operation!=null){
+  this.perviousOperandTextElement.innerText =`${this.perviousOperand} ${this.operation}`
+}
+else{
+this.perviousOperandTextElement.innerText=''
+
+}
 
 }
 }
@@ -106,6 +136,19 @@ operationButtons.forEach(button=> {
  equalsButton.addEventListener('click',button=>{
   calculator.compute()
   calculator.updateDisplay()
+
+
+ })
+
+ allClearButton.addEventListener('click',button=>{
+   calculator.clear()
+   calculator.updateDisplay()
+
+
+ })
+ deleteButton.addEventListener('click',button=>{
+ calculator.delete()
+ calculator.updateDisplay()
 
 
  })
