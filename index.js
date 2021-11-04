@@ -7,7 +7,7 @@ this.clear()
 
 clear() {
 this.currentOperand =''
-this .perviousOperand = ''
+this.perviousOperand = ''
 this.operation=undefined
 }
 delete(){
@@ -16,7 +16,7 @@ delete(){
 
 }
 appendNumber(number){
-
+  this.currentOperand = number
 
 }
 
@@ -31,7 +31,7 @@ compute(){
 }
 
 updateDisplay(){
-
+this.currentOperandTextElement.innertext=this.currentOperand
 
 }
 }
@@ -40,7 +40,7 @@ updateDisplay(){
 const numberButtons = document.querySelectorAll("[data-number]");
 const operationButtons = document.querySelectorAll("[data-operation]");
 const equalsButton = document.querySelector("[data-equals]");
-const deleteButton = deleteButton.querySelector("[data-delete]");
+const deleteButton = document.querySelector("[data-delete]");
 const allClearButton = document.querySelector("[data-all-clear]");
 const perviousOperandTextElement = document.querySelector(
   "[data-previous-operand]"
@@ -48,3 +48,15 @@ const perviousOperandTextElement = document.querySelector(
 const currentOperandTextElement = document.querySelector(
   "[data-current-operand]"
 );
+
+const calculator = new Calculator(perviousOperandTextElement,currentOperandTextElement)
+
+
+numberButtons.forEach(button=> {
+ button.addEventListener('click',()=>{
+   calculator.appendNumber(button.innertext)
+   calculator.updateDisplay()
+   console.log(numberButtons)
+ })
+
+})
