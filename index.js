@@ -16,22 +16,55 @@ delete(){
 
 }
 appendNumber(number){
-  this.currentOperand = number
+  if (number ==='.'&&this.currentOperand.includes('.')){return}
+  this.currentOperand = this.currentOperand.toString()+number.toString()
 
 }
 
 chooseOperation(operation){
+  if (this.currentOperand==="")return
+  if(this.perviousOperand!==""){
+   this.compute()
+
+  }
+  this.operation = operation
+  this.perviousOperand=this.currentOperand
+  this.currentOperand=''
 
 
 }
 compute(){
+let computation
+const perv = parseFloat(this.perviousOperand)
+const current = parseFloat(this.currentOperand)
+if(isNaN(perv)||isNaN(current)) return
+switch (this.operation){
+ case'+':
+ computation = perv+current
+ break
+ case'-':
+ computation = perv-current
+ break
+ case'*':
+ computation =perv*current
+ break
+ case'÷':
+ computation = perv/current
+ break
+ default:
+   return
 
 
 
 }
+this.currentOperand = computation
+this.operation = undefined
+this.perviousOperand =''
+}
 
 updateDisplay(){
-this.currentOperandTextElement.innertext=this.currentOperand
+this.currentOperandTextElement.innerText=this.currentOperand
+this.perviousOperandTextElement.innerText =this.perviousOperand
 
 }
 }
@@ -54,9 +87,25 @@ const calculator = new Calculator(perviousOperandTextElement,currentOperandTextE
 
 numberButtons.forEach(button=> {
  button.addEventListener('click',()=>{
-   calculator.appendNumber(button.innertext)
+   calculator.appendNumber(button.innerText)
    calculator.updateDisplay()
-   console.log(numberButtons)
+   
  })
 
 })
+
+
+operationButtons.forEach(button=> {
+  button.addEventListener('click',()=>{
+    calculator.chooseOperation(button.innerText)
+    calculator.updateDisplay()
+    
+  })
+ 
+ })
+ equalsButton.addEventListener('click',button=>{
+  calculator.compute()
+  calculator.updateDisplay()
+
+
+ })
